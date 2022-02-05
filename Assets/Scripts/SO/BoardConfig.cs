@@ -12,6 +12,9 @@ namespace Strawberry.SO
         [Tooltip("Increase of color when a key is pressed")]
         public float ColorIncrease;
 
+        [Tooltip("Speed in which the notes are falling down")]
+        public float FallingSpeed;
+
         [Header("Prefabs")]
         public GameObject HorLinePrefab;
     }
