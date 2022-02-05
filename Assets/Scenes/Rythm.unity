@@ -896,6 +896,7 @@ GameObject:
   - component: {fileID: 1283480363}
   - component: {fileID: 1283480364}
   - component: {fileID: 1283480366}
+  - component: {fileID: 1283480368}
   - component: {fileID: 1283480365}
   - component: {fileID: 1283480367}
   m_Layer: 0
@@ -1178,11 +1179,72 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 4c5e3e79-3aca-4aa6-b5aa-0d3e75901953
     m_ActionName: Player/BoardButton4[/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1283480368}
+        m_TargetAssemblyTypeName: Assets.Scripts.Manager.DebugManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4b53347a-d8cc-45dc-ba04-a5a0fcf6674f
+    m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1283480368}
+        m_TargetAssemblyTypeName: Assets.Scripts.Manager.DebugManager, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 85a31265-f1de-4941-8ba3-40509af3c51f
+    m_ActionName: Player/DEBUG_Pause[/Keyboard/numpad2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1283480368}
+        m_TargetAssemblyTypeName: Strawberry.Manager.DebugManager, Assembly-CSharp
+        m_MethodName: ChangeGamemode
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2de999e1-d4f6-4233-aba0-913ebdad925a
+    m_ActionName: Player/DEBUG_ToggleGamemode[/Keyboard/numpad0]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1283480368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283480362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ba655e1eb13754e8a6905d02fa19cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentGamemode: {fileID: 304473637}
 --- !u!224 &1299189703 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6206069023529551191, guid: 34099f6c2f254b240859505312c9f5b0, type: 3}

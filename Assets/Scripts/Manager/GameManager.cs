@@ -11,9 +11,22 @@ namespace Strawberry.Manager
 
         private AudioSource _source;
 
-        private void Start()
+        private Gamemode _gamemode;
+        public Gamemode Gamemode
+        {
+            get => _gamemode;
+            set
+            {
+                _gamemode = value;
+                _source.Stop();
+            }
+        }
+
+        private void Awake()
         {
             _source = GetComponent<AudioSource>();
+            _source.clip = _currentSong.Song;
+            Gamemode = Gamemode.Infinite;
         }
     }
 }

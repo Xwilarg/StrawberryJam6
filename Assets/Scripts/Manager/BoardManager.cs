@@ -25,7 +25,9 @@ namespace Strawberry.Manager
         // Color management of _hitMarks
         private Color _baseColor;
 
-        private List<RectTransform> _horLines = new();
+        private readonly List<RectTransform> _horLines = new();
+
+        private AudioSource _source;
 
         private void Awake()
         {
@@ -34,7 +36,16 @@ namespace Strawberry.Manager
 
         private void Start()
         {
+            _source = GetComponent<AudioSource>();
             _baseColor = _hitMarks[0].color;
+
+            InitBoard();
+        }
+
+        public void InitBoard()
+        {
+            _horLines.Clear();
+
             // Init horizontal lines
             for (int index = (int)_boardCanvas.sizeDelta.y; index > 0; index -= _boardConfig.DistanceHorLines)
             {
@@ -47,37 +58,38 @@ namespace Strawberry.Manager
 
         private void Update()
         {
+            // Clip not playing, nothing to do...
+            if (!_source.isPlaying)
+            {
+                return;
+            }
+            // Update the horizontal lines so the player feel like the board is going toward him
             foreach (var line in _horLines)
             {
                 var newY = line.anchoredPosition.y - Time.deltaTime * _boardConfig.FallingSpeed;
-                if (newY < 0f)
+                if (newY < 0f) // Move the bar back at the end of the board
                 {
                     newY += _boardCanvas.sizeDelta.y;
                 }
                 line.anchoredPosition = new Vector2(0f, newY);
+
+                // Reduce size of the line when they get closer to the player so we still see them when they are far away
                 line.sizeDelta = new Vector2(line.sizeDelta.x, 2f + newY / 100f);
             }
         }
 
+        #region inputs
         public void BoardButton1(InputAction.CallbackContext value)
-        {
-            BoardButton(value, 0);
-        }
+            => BoardButton(value, 0);
 
         public void BoardButton2(InputAction.CallbackContext value)
-        {
-            BoardButton(value, 1);
-        }
+            => BoardButton(value, 1);
 
         public void BoardButton3(InputAction.CallbackContext value)
-        {
-            BoardButton(value, 2);
-        }
+            => BoardButton(value, 2);
 
         public void BoardButton4(InputAction.CallbackContext value)
-        {
-            BoardButton(value, 3);
-        }
+            => BoardButton(value, 3);
 
         private void BoardButton(InputAction.CallbackContext value, int index)
         {
@@ -94,5 +106,6 @@ namespace Strawberry.Manager
                 _hitMarks[index].color = _baseColor;
             }
         }
+        #endregion
     }
 }
