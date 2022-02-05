@@ -2,7 +2,7 @@
 {
     public enum Gamemode
     {
-        Creator,
+        Genesis,
         Infinite
     }
 }

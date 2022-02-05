@@ -1,6 +1,10 @@
 ﻿using Strawberry.Data;
 using Strawberry.SO;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace Strawberry.Manager
@@ -24,7 +28,7 @@ namespace Strawberry.Manager
             }
         }
 
-        private NoteData[] _data;
+        private List<NoteData> _data;
 
         public NoteData[] SongData
         {
@@ -33,6 +37,7 @@ namespace Strawberry.Manager
                 if (_data == null)
                 {
                     _data = _currentSong.SongData.text.Replace("\r", "").Split('\n')
+                        .Where(x => !string.IsNullOrWhiteSpace(x))
                         .Select(x =>
                         {
                             var elems = x.Split(',');
@@ -41,10 +46,25 @@ namespace Strawberry.Manager
                                 Timer = float.Parse(elems[0]),
                                 Line = int.Parse(elems[1])
                             };
-                        }).ToArray();
+                        }).ToList();
                 }
-                return _data;
+                return _data.ToArray();
             }
+        }
+
+        public void InitGenesis()
+        {
+            File.AppendAllText("editorData.csv", $"{Environment.NewLine}{DateTime.Now}{Environment.NewLine}");
+        }
+
+        public void AddNote(float timer, int line)
+        {
+            File.AppendAllText("editorData.csv", $"{timer},{line}{Environment.NewLine}");
+            _data.Add(new()
+            {
+                Timer = timer,
+                Line = line
+            });
         }
 
         private void Awake()

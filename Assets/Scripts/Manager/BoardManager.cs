@@ -51,6 +51,8 @@ namespace Strawberry.Manager
         private AudioSource _source;
         private int _score, _combo;
 
+        private GameManager _gm;
+
         private void Awake()
         {
             Assert.AreEqual(4, _hitMarks.Length);
@@ -60,6 +62,7 @@ namespace Strawberry.Manager
         private void Start()
         {
             _source = GetComponent<AudioSource>();
+            _gm = GetComponent<GameManager>();
             _baseColor = _hitMarks[0].color;
 
             InitBoard();
@@ -122,9 +125,17 @@ namespace Strawberry.Manager
             }
 
             // Make notes fall down
-            foreach (var note in _notes)
+            for (int i = _notes.Count - 1; i >= 0; i--)
             {
+                var note = _notes[i];
                 note.anchoredPosition = Vector2.up * (note.anchoredPosition.y - Time.deltaTime * _boardConfig.FallingSpeed);
+                if (note.anchoredPosition.y < 0f)
+                {
+                    _notes.Remove(note);
+                    Destroy(note.gameObject);
+                    _combo = 0;
+                    UpdateScoreText();
+                }
             }
         }
 
@@ -152,30 +163,40 @@ namespace Strawberry.Manager
                     _boardConfig.ColorIncrease
                 );
 
-                var meY = ((RectTransform)me.transform).anchoredPosition.y;
-                (RectTransform Obj, float Dist)? closestNote = _notes.Select(n => (n, Mathf.Abs(meY - n.anchoredPosition.y))).OrderBy(n => n.Item2).FirstOrDefault();
 
-                var hitInfo = _boardConfig.HitInfo.OrderBy(x => x.MaxDistance).ToArray();
-                if (closestNote.HasValue && closestNote.Value.Dist < hitInfo.Last().MaxDistance)
+                if (_gm.Gamemode == Gamemode.Genesis)
                 {
-                    foreach (var hit in hitInfo)
-                    {
-                        if (closestNote.Value.Dist < hit.MaxDistance)
-                        {
-                            _score += hit.Score;
-                            _combo++;
-                            UpdateScoreText();
-                            Destroy(closestNote.Value.Obj.gameObject);
-                            _notes.Remove(closestNote.Value.Obj);
-                            Debug.Log($"Hitting line {index} with distance of {closestNote.Value.Dist} gave {hit.Score}");
-                            break;
-                        }
-                    }
+                    _gm.AddNote(_source.time, index);
+                    Debug.Log($"Adding note on line {index} with distance of {_source.time}");
                 }
                 else
                 {
-                    Debug.Log($"Hitting line {index} with distance of {closestNote.Value.Dist} failed");
+                    var meY = ((RectTransform)me.transform).anchoredPosition.y;
+                    (RectTransform Obj, float Dist)? closestNote = _notes.Select(n => (n, Mathf.Abs(meY - n.anchoredPosition.y))).OrderBy(n => n.Item2).FirstOrDefault();
+
+                    var hitInfo = _boardConfig.HitInfo.OrderBy(x => x.MaxDistance).ToArray();
+                    if (closestNote.HasValue && closestNote.Value.Dist < hitInfo.Last().MaxDistance)
+                    {
+                        foreach (var hit in hitInfo)
+                        {
+                            if (closestNote.Value.Dist < hit.MaxDistance)
+                            {
+                                _score += hit.Score;
+                                _combo++;
+                                UpdateScoreText();
+                                _notes.Remove(closestNote.Value.Obj);
+                                Destroy(closestNote.Value.Obj.gameObject);
+                                Debug.Log($"Hitting line {index} with distance of {closestNote.Value.Dist} gave {hit.Score}");
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log($"Hitting line {index} with distance of {closestNote.Value.Dist} failed");
+                    }
                 }
+
             }
             else if (value.phase == InputActionPhase.Canceled)
             {

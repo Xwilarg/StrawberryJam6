@@ -32,7 +32,7 @@ namespace Strawberry.Manager
         {
             if (_gm.Gamemode == Gamemode.Infinite)
             {
-                _gm.Gamemode = Gamemode.Creator;
+                _gm.Gamemode = Gamemode.Genesis;
             }
             else
             {
@@ -46,6 +46,10 @@ namespace Strawberry.Manager
         {
             if (value.phase == InputActionPhase.Started && !_source.isPlaying)
             {
+                if (_gm.Gamemode == Gamemode.Genesis)
+                {
+                    _gm.InitGenesis();
+                }
                 _source.Play();
             }
         }
