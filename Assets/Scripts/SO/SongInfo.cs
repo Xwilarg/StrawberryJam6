@@ -7,5 +7,8 @@ namespace Strawberry.SO
     {
         [Tooltip("Song to be played")]
         public AudioClip Song;
+
+        public string Name;
+        public string Author;
     }
 }

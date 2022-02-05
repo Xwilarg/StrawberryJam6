@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e95471448a1ab4fbe61dca765b9ba7, type: 3}
+  m_Name: BoardConfig
+  m_EditorClassIdentifier: 
+  DistanceHorLines: 500
+  ColorIncrease: 0.3
+  HorLinePrefab: {fileID: 4339642112036269612, guid: 721f380d6c168344db787c33e4f87e5d, type: 3}

@@ -2,8 +2,8 @@
 !/[Aa]ssets/**/*.meta
 
 # Test songs
-Assets/ScriptableObjects/Songs/TMP/
-Assets/ScriptableObjects/Songs/TMP.meta
+Assets/Musics/TMP/
+Assets/Musics/TMP.meta
 
 # Packages
 /[Aa]ssets/TextMesh Pro/
