@@ -1,5 +1,7 @@
 ﻿using Strawberry.SO;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
@@ -32,6 +34,14 @@ namespace Strawberry.Manager
         [Tooltip("Board objects associated to the DFJK buttons")]
         private Image[] _hitMarks;
 
+        [SerializeField]
+        [Tooltip("Current score")]
+        private TMP_Text _scoreText;
+
+        [SerializeField]
+        [Tooltip("Current combo (note strike in a row)")]
+        private TMP_Text _comboText;
+
         // Color management of _hitMarks
         private Color _baseColor;
 
@@ -39,6 +49,7 @@ namespace Strawberry.Manager
         private readonly List<RectTransform> _notes = new();
 
         private AudioSource _source;
+        private int _score, _combo;
 
         private void Awake()
         {
@@ -57,7 +68,7 @@ namespace Strawberry.Manager
         public void InitBoard()
         {
             foreach (var obj in _horLines) Destroy(obj.gameObject);
-            foreach (var obj in _notes) Destroy(obj);
+            foreach (var obj in _notes) Destroy(obj.gameObject);
 
             _horLines.Clear();
             _notes.Clear();
@@ -79,6 +90,13 @@ namespace Strawberry.Manager
                 rTransform.anchoredPosition = Vector2.up * _boardConfig.FallingSpeed * note.Timer;
                 _notes.Add(rTransform);
             }
+        }
+
+        private void UpdateScoreText()
+        {
+            _scoreText.text = $"{_score}";
+            // Only display combo if it's high enough
+            _comboText.text = _combo >= _boardConfig.MinComboBeforeDisplay ? $"{_combo}" : string.Empty;
         }
 
         private void Update()
@@ -127,11 +145,37 @@ namespace Strawberry.Manager
         {
             if (value.phase == InputActionPhase.Started)
             {
-                _hitMarks[index].color = _hitMarks[index].color + new Color(
+                var me = _hitMarks[index];
+                me.color += new Color(
                     _boardConfig.ColorIncrease,
                     _boardConfig.ColorIncrease,
                     _boardConfig.ColorIncrease
                 );
+
+                var meY = ((RectTransform)me.transform).anchoredPosition.y;
+                (RectTransform Obj, float Dist)? closestNote = _notes.Select(n => (n, Mathf.Abs(meY - n.anchoredPosition.y))).OrderBy(n => n.Item2).FirstOrDefault();
+
+                var hitInfo = _boardConfig.HitInfo.OrderBy(x => x.MaxDistance).ToArray();
+                if (closestNote.HasValue && closestNote.Value.Dist < hitInfo.Last().MaxDistance)
+                {
+                    foreach (var hit in hitInfo)
+                    {
+                        if (closestNote.Value.Dist < hit.MaxDistance)
+                        {
+                            _score += hit.Score;
+                            _combo++;
+                            UpdateScoreText();
+                            Destroy(closestNote.Value.Obj.gameObject);
+                            _notes.Remove(closestNote.Value.Obj);
+                            Debug.Log($"Hitting line {index} with distance of {closestNote.Value.Dist} gave {hit.Score}");
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Log($"Hitting line {index} with distance of {closestNote.Value.Dist} failed");
+                }
             }
             else if (value.phase == InputActionPhase.Canceled)
             {
