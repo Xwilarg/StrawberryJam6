@@ -1,6 +1,10 @@
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
+# Test songs
+Assets/ScriptableObjects/Songs/TMP/
+Assets/ScriptableObjects/Songs/TMP.meta
+
 # Packages
 /[Aa]ssets/TextMesh Pro/
 /[Aa]ssets/TextMesh Pro.meta
