@@ -15,15 +15,15 @@ MonoBehaviour:
   DistanceHorLines: 500
   ColorIncrease: 0.1
   MinComboBeforeDisplay: 10
-  FallingSpeed: 1000
+  FallingSpeed: 5000
   HitInfo:
-  - MaxDistance: 40
+  - MaxDistance: 80
     Color: {r: 1, g: 1, b: 0, a: 0}
     Score: 500
-  - MaxDistance: 60
+  - MaxDistance: 160
     Color: {r: 0, g: 0, b: 1, a: 0}
     Score: 250
-  - MaxDistance: 80
+  - MaxDistance: 250
     Color: {r: 1, g: 0, b: 0, a: 0}
     Score: 100
   HorLinePrefab: {fileID: 4339642112036269612, guid: 721f380d6c168344db787c33e4f87e5d, type: 3}

@@ -37,7 +37,7 @@ namespace Strawberry.Manager
                 if (_data == null)
                 {
                     _data = _currentSong.SongData.text.Replace("\r", "").Split('\n')
-                        .Where(x => !string.IsNullOrWhiteSpace(x))
+                        .Where(x => !string.IsNullOrWhiteSpace(x) && !x.TrimStart().StartsWith('#'))
                         .Select(x =>
                         {
                             var elems = x.Split(',');

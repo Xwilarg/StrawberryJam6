@@ -129,7 +129,7 @@ namespace Strawberry.Manager
             {
                 var note = _notes[i];
                 note.anchoredPosition = Vector2.up * (note.anchoredPosition.y - Time.deltaTime * _boardConfig.FallingSpeed);
-                if (note.anchoredPosition.y < 0f)
+                if (note.anchoredPosition.y < -500f)
                 {
                     _notes.Remove(note);
                     Destroy(note.gameObject);
