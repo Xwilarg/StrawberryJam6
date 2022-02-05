@@ -17,5 +17,6 @@ namespace Strawberry.SO
 
         [Header("Prefabs")]
         public GameObject HorLinePrefab;
+        public GameObject NotePrefab;
     }
 }

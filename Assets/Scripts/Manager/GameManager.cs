@@ -1,4 +1,6 @@
-﻿using Strawberry.SO;
+﻿using Strawberry.Data;
+using Strawberry.SO;
+using System.Linq;
 using UnityEngine;
 
 namespace Strawberry.Manager
@@ -19,6 +21,29 @@ namespace Strawberry.Manager
             {
                 _gamemode = value;
                 _source.Stop();
+            }
+        }
+
+        private NoteData[] _data;
+
+        public NoteData[] SongData
+        {
+            get
+            {
+                if (_data == null)
+                {
+                    _data = _currentSong.SongData.text.Replace("\r", "").Split('\n')
+                        .Select(x =>
+                        {
+                            var elems = x.Split(',');
+                            return new NoteData
+                            {
+                                Timer = float.Parse(elems[0]),
+                                Line = int.Parse(elems[1])
+                            };
+                        }).ToArray();
+                }
+                return _data;
             }
         }
 

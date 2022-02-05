@@ -946,7 +946,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1045,6 +1045,11 @@ MonoBehaviour:
   _boardConfig: {fileID: 11400000, guid: 52060b2ce31672e48800863bb5ba3b66, type: 2}
   _boardCanvas: {fileID: 1556019093}
   _horLinesParent: {fileID: 2090853350}
+  _lines:
+  - {fileID: 228778798}
+  - {fileID: 2039870520}
+  - {fileID: 1089623541}
+  - {fileID: 3142560}
   _hitMarks:
   - {fileID: 1299189704}
   - {fileID: 1961934840}

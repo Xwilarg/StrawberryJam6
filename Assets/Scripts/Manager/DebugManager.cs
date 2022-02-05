@@ -11,11 +11,13 @@ namespace Strawberry.Manager
 
         private AudioSource _source;
         private GameManager _gm;
+        private BoardManager _bm;
 
         private void Start()
         {
             _source = GetComponent<AudioSource>();
             _gm = GetComponent<GameManager>();
+            _bm = GetComponent<BoardManager>();
         }
 
         private void EditGamemodeText()
@@ -37,6 +39,7 @@ namespace Strawberry.Manager
                 _gm.Gamemode = Gamemode.Infinite;
             }
             EditGamemodeText();
+            _bm.InitBoard();
         }
 
         public void Play(InputAction.CallbackContext value)

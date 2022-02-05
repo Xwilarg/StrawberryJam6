@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: "\u30C7\u30A3\u30FC\u30D7\u30D6\u30EB\u30FC"
   m_EditorClassIdentifier: 
   Song: {fileID: 8300000, guid: 13a54b9df57434a419f5b472609a1550, type: 3}
+  SongData: {fileID: 4900000, guid: 351e75444607eda42a873fad575693d9, type: 3}
   Name: "\u30C7\u30A3\u30FC\u30D7\u30D6\u30EB\u30FC"
   Author: "\u30AD\u30CD\u30DE106"
